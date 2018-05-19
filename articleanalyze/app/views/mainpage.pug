@@ -1,0 +1,74 @@
+extends layout
+
+block content
+    div.part_header Welcome to WikiLatic
+    //- h1 Welcome to wikimedia
+    div.container
+        div.row
+            //- div(class='col s12') the wikimedia
+            div#imgbox(class='col s6')
+                img(src='images/1.jpg', width='400px',height='300px')
+                img(src='images/2.jpg', width='400px',height='300px')
+                img(src='images/3.jpg', width='400px',height='300px')
+                a(href="#" class="slidesjs-previous slidesjs-navigation")
+                    img(class="icon-chevron-left icon-large")
+                a(href="#" class="slidesjs-next slidesjs-navigation")
+                    img(class="icon-chevron-right icon-large")
+                //- ul.img_slides
+                //-     li.img_slides
+                //-         img(src='images/1.jpg', width='400px',height='300px')
+                //-     li.img_slides
+                //-         img(src='images/2.jpg', width='400px',height='300px')
+                //-     li.img_slides
+                //-         img(src='images/3.jpg', width='400px',height='300px')
+
+                
+            div(class='col s6') Please login
+                table#tb_login
+                    tr
+                        td Usename:
+                        td 
+                            input(type="text", name="username")
+                    tr
+                        td Password:
+                        td 
+                            input(type="password", name="password")
+                    tr
+                        td(colspan="2", text-align="center")
+                            a#bt_login(class='waves-effect waves-light btn') login
+                    tr
+                        td(colspan="2")
+                            a#register(href="/articles/add") Do not have an account?
+    div#register_form 
+        table#tb_register
+                tr
+                    td First name:
+                    td 
+                        input(type="text", name="first_name")
+                tr
+                    td Last name:
+                    td 
+                        input(type="text", name="last_name")
+                tr
+                    td Email Address:
+                    td 
+                        input(type="email", name="email_address")
+                tr
+                    td Username:
+                    td
+                        input(type="text", name="username")
+                tr
+                    td Password:
+                    td
+                        input(type="password", name="password")
+                tr
+                    td Confirm password:
+                    td
+                        input(type="password", name="confirm_password")
+                tr
+                    td(colspan=2, text-align=center)
+                       a(class='waves-effect waves-light btn', margin='auto') submit 
+                       a#return_mainpage(class='waves-effect waves-light btn', margin-left='10px') return
+    script(src='/js/mainpage.js',type='text/javascript')
+    script(src='/js/jquery.slides.min.js',type='text/javascript')
+    
