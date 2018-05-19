@@ -1,0 +1,33 @@
+.filterbar_overview
+        div.row
+            div(class="input-field col s4") You can change the number of highest/lowest revision:
+                br
+                select#changeno_list
+                    option(value='1') One
+                    option(value='2') Two
+                    option(value='3' selected=true) Three (defalt)
+                    option(value='4') Four
+                    option(value='5') Five
+                input#bt_changenumber(type="button", value="search")
+            div(class="input-field col s4") The history of the articles:
+                br
+                select#history_list
+                    option(value='0') Longest history (top 3)
+                    option(value='1')  The shortest history
+                input#bt_history(type="button", value="search")
+            div(class="input-field col s4") The populartiy of articles:
+                br
+                input#bt_popularity(type="button", value="show popularity of article")
+.content
+        .row
+            div#textcontent(class="input-field col s6")
+                div top 3 most revision:
+                div top 3 least revision:
+            div#charts(class="input-field col s6")
+                div.bt_changechart You can change the chart type:              
+                    button#bt_barchart(type="button", value="Bar chart") bar chart
+                    button#bt_piechart(type="button", value="Pie chart") pie chart
+                p#chart_title
+                div#thechart
+
+script(src='/js/overview.js',type='text/javascript')

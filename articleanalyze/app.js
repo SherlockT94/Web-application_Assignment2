@@ -35,8 +35,10 @@ app.get('/',function(req,res){
 });
 
 app.get('/articles/add', function(req,res){
-    res.render('add_article', {
-        title: 'Add Articles'
+    var articles = ['abc','sdfs','see']
+    res.render('analysepage', {
+        name: 'xiaoyun ma',
+        articles:articles
     });
 })
 

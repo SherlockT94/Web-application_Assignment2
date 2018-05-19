@@ -1,0 +1,8 @@
+#changeno_list,#history_list,#searchArticle,#article_list{
+    width: 250px;
+}
+#username{
+    float:right;
+    font-size:15px;
+    margin-right: 20px;
+}
