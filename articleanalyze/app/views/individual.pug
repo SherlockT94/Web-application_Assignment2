@@ -1,12 +1,27 @@
 .filterbar_individual
-        .row
-            div#select_article(class="input-field col s6") You can select an article:
-                select#article_list 
-                    each article in articles
-                        option #{article}
-                input#bt_selectArticle(type="button", value="select")
-            div(class="input-field col s6") You can enter the article title:
-                input#searchArticle(type="text", name="search_article")
-                input#bt_searchArticle(type="button", value="select")
+    .row
+        div#select_article(class="input-field col s6") You can select an article:
+            select#article_list 
+                each article in articles
+                    option #{article}
+            input#bt_selectArticle(type="button", value="select")
+        div(class="input-field col s6") You can enter the article title:
+            input#searchArticle(type="text", name="search_article")
+            input#bt_searchArticle(type="button", value="select")
+.content
+    .row
+        div#textcontent(class="input-field col s6")
+            #article_title The title
+            #total_revision The total number of revision
+            #top5_revision The top five regular users
+                table#top5_users
+            
+
+        div#charts(class="input-field col s6")
+            select#changechart
+                option(value='columchart') Revision number distributed by user type and year
+                option(value='piechart') Revision number distribution based on user type
+                option(value='barchart') Revision number distributed by year made by the top user
+            input#bt_searchArticle(type="button", value="change the chart")
 
 script(src='/js/individual.js',type='text/javascript')

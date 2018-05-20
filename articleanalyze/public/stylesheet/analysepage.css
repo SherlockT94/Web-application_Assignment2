@@ -1,8 +1,39 @@
-#changeno_list,#history_list,#searchArticle,#article_list{
+#changeno_list,#history_list,#searchArticle,#article_list, #author_name{
     width: 250px;
 }
 #username{
     float:right;
     font-size:15px;
     margin-right: 20px;
+}
+
+#changechart{
+    width:450px;
+}
+.filterbar_individual,.filterbar_overview,.fliterbar_author{
+    border-bottom-style: solid;
+    border-bottom-color: #d9d9d9;
+}
+
+#bt_searchArticle,#bt_selectArticle,#bt_changenumber,#bt_history,#bt_searchauthor{
+    width:80px;
+    height: 40px;
+    margin-left: 20px;
+}
+
+#overview,#individual,#author{
+    margin-left: 2%;
+    margin-right:2%;
+}
+
+/* #textcontent{
+    border-right-style: solid;
+    border-right-color: #d9d9d9;
+} */
+#charts{
+    border-left-style: solid;
+    border-left-color: #d9d9d9;
+}
+#bt_popularity{
+    height: 40px;
 }

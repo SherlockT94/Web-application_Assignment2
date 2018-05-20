@@ -1,60 +1,24 @@
 extends layout
 
-block content    
-    nav
-        div(class="nav-content")
-            ul(class="tabs tabs-transparent")
-                li(class="tab")
-                    a(href="#1") overview
-                li(class="tab")
-                    a(href="#2") individual
-        div#username Welcome, #{name}
-    //- .filterbar_overview
-    //-     div.row
-    //-         div(class="input-field col s4") You can change the number of highest/lowest revision:
-    //-             br
-    //-             select#changeno_list
-    //-                 option(value='1') One
-    //-                 option(value='2') Two
-    //-                 option(value='3' selected=true) Three (defalt)
-    //-                 option(value='4') Four
-    //-                 option(value='5') Five
-    //-             input#bt_changenumber(type="button", value="search")
-    //-         div(class="input-field col s4") The history of the articles:
-    //-             br
-    //-             select#history_list
-    //-                 option(value='0') Longest history (top 3)
-    //-                 option(value='1')  The shortest history
-    //-             input#bt_history(type="button", value="search")
-    //-         div(class="input-field col s4") The populartiy of articles:
-    //-             br
-    //-             input#bt_popularity(type="button", value="show popularity of article") 
-    //- .filterbar_individual
-    //-     .row
-    //-         div#select_article(class="input-field col s6") You can select an article:
-    //-             select#article_list 
-    //-                 each article in articles
-    //-                     option #{article}
-    //-             input#bt_selectArticle(type="button", value="select")
-    //-         div(class="input-field col s6") You can enter the article title:
-    //-             input#searchArticle(type="text", name="search_article")
-    //-             input#bt_searchArticle(type="button", value="select")
-    //- .content
-    //-     .row
-    //-         div#textcontent(class="input-field col s6")
-    //-             div top 3 most revision:
-    //-             div top 3 least revision:
-    //-         div#charts(class="input-field col s6")
-    //-             div.bt_changechart You can change the chart type:              
-    //-                 button#bt_barchart(type="button", value="Bar chart") bar chart
-    //-                 button#bt_piechart(type="button", value="Pie chart") pie chart
-    //-             p#chart_title
-    //-             div#thechart
-    
-    div#1 overview
+block content
+    div    
+        nav
+            div(class="nav-content")
+                div#username(class="brand-logo right") Welcome, #{name}
+                ul(class="tabs tabs-transparent")
+                    li(class="tab")
+                        a(href="#overview") Overview
+                    li(class="tab")
+                        a(href="#individual") Individual
+                    li(class="tab")
+                        a(href="#author") Author
+   
+    div#overview 
         include ./overview.pug
-    div#2 individual
+    div#individual 
         include ./individual.pug
+    #author
+        include ./author.pug
 
 
     
