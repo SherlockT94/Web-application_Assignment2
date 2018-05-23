@@ -1,9 +1,6 @@
 .filterbar_individual
     .row
         div#select_article(class="input-field col s6") You can select an article:
-            select#article_list 
-                each article in articles
-                    option #{article}
             input#bt_selectArticle(type="button", value="select")
         div(class="input-field col s6") You can enter the article title:
             input#searchArticle(type="text", name="search_article")
