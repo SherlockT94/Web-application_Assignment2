@@ -37,3 +37,12 @@
 /* #imgbox{
     display: none;
 } */
+
+body{
+    background-image: url(../images/background.png);
+}
+
+#icon{
+    float:left;
+    width:10%;
+}

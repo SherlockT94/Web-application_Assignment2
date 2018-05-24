@@ -4,13 +4,13 @@ $(document).ready(function() {
     $("#imgbox").slidesjs({height:500,width:600,navigation: false})
     $("#register").click(function(event){
     	event.preventDefault();
-        $(".container").hide();
+        $("#login_form").hide();
         $("#register_form ").show();
        })
     $("#return").click(function(event){
         event.preventDefault();
         $("#register_form ").hide();
-        $(".container").show();
+        $("#login_form").show();
     })
     $("#login").click(function(){
 		 //alert("123");

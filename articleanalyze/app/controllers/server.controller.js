@@ -12,7 +12,7 @@ module.exports.login= function(req,res){
 	 password=req.body.password;
 	 console.log(username,password);
 	 loginmodel.passwordverify(username, function(err,result){
-			//console.log(result)
+			// console.log(result)
 			if (err){
 				console.log("Cannot find " + name + ", please try again!");
 				res.send('fail');
