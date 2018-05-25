@@ -73,11 +73,18 @@ $(document).ready(function() {
 	    				{
     						 window.alert("successfully registered!");
     						 $("#register_form ").hide();
-    					     $(".container").show();
+    					     $("#login_form").show();
+    					     $("#first_name").val("");
+    	    				 $("#last_name").val("");
+    	    				 $("#email_address").val("");
+    	    				 $("#re_username").val("");
+    	    				 $("#re_password").val("");
+    	    				 $("#confirm_password").val("");
 	    				}
     					 else if(data=="haveuser")
     					{
     						 window.alert("Username has already exist,please change to another one");
+    						 
     					}
     					 
     				  });

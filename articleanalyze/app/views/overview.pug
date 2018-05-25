@@ -3,11 +3,9 @@
         div(class="input-field col s4") You can change the number of highest/lowest revision:
             br
             select#changeno_list
-                option(value='1') One
-                option(value='2') Two
-                option(value='3' selected=true) Three (defalt)
-                option(value='4') Four
-                option(value='5') Five
+                option(value='1') 1
+                option(value='2') 2
+                option(value='3' selected=true) 3 (defalt)
             input#bt_changenumber(type="button", value="search")
         div(class="input-field col s4") The history of the articles:
             br
@@ -18,16 +16,31 @@
         div(class="input-field col s4") The populartiy of articles:
             br
             input#bt_popularity(type="button", value="show popularity of article")
+            p#popularity
 .content
     .row
-        div#textcontent(class="input-field col s6")
-            div top 3 most revision:
-            div top 3 least revision:
-        div#charts(class="input-field col s6")
+        div#textcontent(class="input-field col s4")
+            p#most_title top 3 most revision:
+            p#most1 initializing...
+            p#most2 
+            p#most3 
+            p#least_title.least top 3 least revision:
+            p#least1 initializing...
+            p#least2 
+            p#least3
+        div#textcontent2(class="input-field col s4")
+            p(id='long_title' class='long') 3 article with longest age:
+            p(id='long1' class='long' )   initializing...
+            p(id='long2' class='long' ) 
+            p(id='long3' class='long' ) 
+            p(id='short_title' class='short' style="display:none")  3 article with shortest age:
+            p(id='short1' class='short' style="display:none")  initializing...
+            p(id='short2' class='short' style="display:none") 
+            p(id='short3' class='short' style="display:none") 
+        div#charts(class="input-field col s4")
             div.bt_changechart You can change the chart type:              
                 button#bt_barchart(type="button", value="Bar chart") bar chart
                 button#bt_piechart(type="button", value="Pie chart") pie chart
             p#chart_title
             div#thechart
-
-script(src='/js/overview.js',type='text/javascript')
+            

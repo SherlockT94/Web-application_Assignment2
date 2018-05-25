@@ -1,7 +1,7 @@
 #changeno_list,#history_list,#searchArticle,#article_list, #author_name{
     width: 250px;
 }
-#session_username{
+#username{
     float:right;
     font-size:15px;
     margin-right: 20px;
