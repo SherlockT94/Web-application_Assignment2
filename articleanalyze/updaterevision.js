@@ -10,6 +10,7 @@ mongoose.connect('mongodb://localhost/wikipedia', function () {
     console.log('mongodb connected')
 });
 
+
 var revisionschema = new mongoose.Schema({
     revid: String,
     parentid: String,
@@ -27,15 +28,27 @@ var Revision = mongoose.model("Revision",revisionschema,"revisions");
 
 
 
+//adminNames.forEach(function(adminNames){
+//    var condition = {user:adminNames}
+//    var update = {$set:{usertype:"admin"}}
+//    var multi = {multi: true}
+//    Revision.update(condition,update,multi,function(error){
+//        if(error){
+//            console.log(error)
+//        }
+//        else{
+//            console.log("success")
+//        }
+//    })
+//})
 
-Revision.update({usertype:{$exists: false}},{$set:{usertype:"regular"}},{multi:true},function(error){
+Revision.update({anon:{$exists: true}},{$set:{usertype:"anon"}},{multi:true},function(error){
 	if(error)
 	{}
 	else{
 		console.log("1");
 	}
 });
-
 // var condition = {user:"Beland"}
 // var update = {$set:{usertype:"admin"}}
 // var multi = {multi: true}

@@ -34,6 +34,8 @@ $(document).ready(function() {
 				}
 				  else if (data == "success")
 				{
+					  document.cookie="username="+$("#username").val();
+					  //window.alert(document.cookie)
 					  window.location.replace("http://localhost:3000/articles/add"); 
 				}
 					  
@@ -81,14 +83,13 @@ $(document).ready(function() {
     	    				 $("#re_password").val("");
     	    				 $("#confirm_password").val("");
 	    				}
-    					 else if(data=="haveuser")
+    					 else if(data =="haveuser")
     					{
     						 window.alert("Username has already exist,please change to another one");
     						 
     					}
     					 
     				  });
-    				  alert("345");
     	}
      })
     	

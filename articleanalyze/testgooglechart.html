@@ -1,27 +1,63 @@
-<head>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript">
-    google.charts.load('current', {packages: ['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart','bar']});
+      google.charts.setOnLoadCallback(drawChart);
+	 var a=[ { year: 2001, admin: 0, bot: 0, anon: 0, regular: 0 },
+			  { year: 2002, admin: 0, bot: 0, anon: 0, regular: 0 },
+			  { year: 2003, admin: 0, bot: 0, anon: 0, regular: 0 },
+			  { year: 2004, admin: 0, bot: 0, anon: 0, regular: 0 },
+			  { year: 2005, admin: 0, bot: 0, anon: 0, regular: 0 },
+			  { year: 2006, admin: 0, bot: 0, anon: 0, regular: 0 },
+			  { year: 2007, admin: 0, bot: 0, anon: 0, regular: 0 },
+			  { year: 2008, admin: 0, bot: 0, anon: 0, regular: 0 },
+			  { year: 2009, admin: 7, bot: 2, anon: 0, regular: 73 },
+			  { year: 2010, admin: 0, bot: 2, anon: 1, regular: 5 },
+			  { year: 2011, admin: 3, bot: 8, anon: 7, regular: 38 },
+			  { year: 2012, admin: 2, bot: 0, anon: 0, regular: 7 },
+			  { year: 2013, admin: 0, bot: 1, anon: 0, regular: 14 },
+			  { year: 2014, admin: 1, bot: 0, anon: 0, regular: 6 },
+			  { year: 2015, admin: 0, bot: 0, anon: 0, regular: 9 },
+			  { year: 2016, admin: 0, bot: 0, anon: 0, regular: 2 },
+			  { year: 2017, admin: 0, bot: 1, anon: 0, regular: 8 },
+			  { year: 2018, admin: 0, bot: 0, anon: 0, regular: 3 } ]
+		
+   function drawChart() {
 
-    function drawChart() {
-      // Define the chart to be drawn.
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Element');
-      data.addColumn('number', 'Percentage');
-      data.addRows([
-        ['Nitrogen', 0.78],
-        ['Oxygen', 0.21],
-        ['Other', 0.01]
-      ]);
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+		var admin=0, bot=0, anon=0, regular=0;
+        data.addColumn('string', 'Year');
+        data.addColumn('number', 'total');
+		for(i=0;i<a.length;i++)
+		{
+			admin+=a[i].admin;
+			bot+=a[i].bot;
+			anon+=a[i].anon;
+			regular+=a[i].regular;
+		}
+        data.addRows([
+          ['admin', admin],
+          ['bot', bot],
+          ['anon', anon],
+          ['regular', regular]
+        ]);
 
-      // Instantiate and draw the chart.
-      var chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
-      chart.draw(data, null);
-    }
-  </script>
-</head>
-<body>
-  <!-- Identify where the chart should be drawn. -->
-  <div id="myPieChart"/>
-</body>
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+  </body>
+</html>

@@ -10,38 +10,10 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
 app.get('/',function(req,res){
-    var articles = [
-        {
-            id:1,
-            title:'article one',
-            body:'the one'
-
-        },
-        {
-            id:2,
-            title:'article two',
-            body:'the one'
-
-        },
-        {
-            id:3,
-            title:'article three',
-            body:'the one'
-
-        },
-    ]
-    res.render('mainpage', {
-        title: 'Articles', articles: articles
-    });
+    res.render('mainpage');
 });
-
-
 app.get('/articles/add', function(req,res){
-    var articles = ['abc','sdfs','see']
-    res.render('analysepage', {
-        name: 'xiaoyun ma',
-        articles:articles
-    });
+    res.render('analysepage');
 })
 app.set('views', path.join(__dirname,'app/views'));
 app.use(express.static(path.join(__dirname, 'public')));
