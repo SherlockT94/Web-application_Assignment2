@@ -276,6 +276,7 @@ $(document).ready(function() {
     //搜索文章功能
     $("#bt_searchArticle").click(function(){
     	flag=0
+    	tip=0
     	for(i=0;i<individual_data.length;i++)
     	{
     		//window.alert($('#autocomplete-input').val());
@@ -285,6 +286,15 @@ $(document).ready(function() {
     			flag+=1;
     			$("#article_title").text($('#autocomplete-input').val());
     			$("#total_revision").text("Total revisions:"+individual_data[i].NumOfRevisions);
+    			s1 = new Date();
+    			timestamp=individual_data[i].timestamp
+    			s2=Date.parse(timestamp)
+    			//window.alert(s1-s2)
+    			if((s1-s2)<(1000*60*60*24))
+    			{
+    				tip=1
+    				window.alert("No data is needed for update")
+    			}
     			break
     		}
     	}
@@ -297,16 +307,127 @@ $(document).ready(function() {
     		//window.alert("Found!")$.post("/article_detail",
     		$("#top5_revision").text("Searching for the top 5 users...");
         	$(".top").text("");
+        	if(tip==1)
+        	{
+	    		$.post("/article_detail",
+	       			 {
+	   						title:$("#article_title").text()
+	   		
+	       			 },
+	       			 function(data, status){
+	       				 //window.alert(data)
+	       				 for(i=0;i<data.length;i++)
+	       				{
+	       					top5_userdata=data
+	       					 $("#top5_revision").text("The top five regular users");
+	       					 //window.alert(data[i].number)
+	       					 //window.alert(data[i].user)
+	       					 $("#top"+(2*i+1)).text("Username: "+data[i].user);
+	       					 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
+	       				}
+	       			 }
+	       			)
+        	}
+        	else
+        	{
+        		$.post("/update",
+       	   			 {
+       							title:$("#title_list").val(),
+       							timestamp: timestamp
+       			
+       	   			 },
+       	   			 function(data, status){
+       	   				 window.alert(data+" Records has been updated!")
+       		   				 $.post("/article_detail",
+       	       			 {
+       	   						title:$("#title_list").val()
+       	   		
+       	       			 },
+       	       			 function(data, status){
+       	       				 //window.alert(data)
+       	       				 top5_userdata=data
+       	       				 for(i=0;i<data.length;i++)
+       	       				{
+       	       					 $("#top5_revision").text("The top five regular users");
+       	       					 //window.alert(data[i].number)
+       	       					 //window.alert(data[i].user)
+       	       					 $("#top"+(2*i+1)).text("Username: "+data[i].user);
+       	       					 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
+       	       				}
+       	       			 }
+       	       			)
+       	   			 }
+       	   			)
+        	}
+    	}
+    })
+    //当用户选择不同的文章的时候
+    $("#title_list").change(function(){
+    	tip=0
+    	$("#article_title").text($("#title_list").val());
+    	for(i=0;i<individual_data.length;i++)
+    	{
+    		if(individual_data[i]._id==$("#title_list").val())
+    		{
+    			$("#total_revision").text("Total revisions:"+individual_data[i].NumOfRevisions);
+    			s1 = new Date();
+    			timestamp=individual_data[i].timestamp
+    			s2=Date.parse(timestamp)
+    			//window.alert(s1-s2)
+    			if((s1-s2)<(1000*60*60*24))
+    			{
+    				tip=1
+    				window.alert("No data is needed for update")
+    			}
+    		}
+    	}
+    	$("#top5_revision").text("Searching for the top 5 users...");
+    	$(".top").text("");
+    	//如果需要更新的话
+    	if(tip==0)
+    	{
+	    	$.post("/update",
+	   			 {
+							title:$("#title_list").val(),
+							timestamp: timestamp
+			
+	   			 },
+	   			 function(data, status){
+	   				 window.alert(data+" Records has been updated!")
+		   				 $.post("/article_detail",
+	       			 {
+	   						title:$("#title_list").val()
+	   		
+	       			 },
+	       			 function(data, status){
+	       				 //window.alert(data)
+	       				 top5_userdata=data
+	       				 for(i=0;i<data.length;i++)
+	       				{
+	       					 $("#top5_revision").text("The top five regular users");
+	       					 //window.alert(data[i].number)
+	       					 //window.alert(data[i].user)
+	       					 $("#top"+(2*i+1)).text("Username: "+data[i].user);
+	       					 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
+	       				}
+	       			 }
+	       			)
+	   			 }
+	   			)
+    	}
+    	//原有正常操作
+    	else
+    	{
     		$.post("/article_detail",
        			 {
-   						title:$("#article_title").text()
+   						title:$("#title_list").val()
    		
        			 },
        			 function(data, status){
        				 //window.alert(data)
+       				 top5_userdata=data
        				 for(i=0;i<data.length;i++)
        				{
-       					top5_userdata=data
        					 $("#top5_revision").text("The top five regular users");
        					 //window.alert(data[i].number)
        					 //window.alert(data[i].user)
@@ -316,49 +437,8 @@ $(document).ready(function() {
        			 }
        			)
     	}
-    })
-    //当用户选择不同的文章的时候
-    $("#title_list").change(function(){
     	
-    	$("#article_title").text($("#title_list").val());
-    	for(i=0;i<individual_data.length;i++)
-    	{
-    		if(individual_data[i]._id==$("#title_list").val())
-    		{
-    			$("#total_revision").text("Total revisions:"+individual_data[i].NumOfRevisions);
-    		}
-    	}
-    	$("#top5_revision").text("Searching for the top 5 users...");
-    	$(".top").text("");
-    	//访问网站看有没有新数据
-    	$.post("/update",
-   			 {
-						title:$("#title_list").val()
-		
-   			 },
-   			 function(data, status){
-   				 window.alert(data)
-   			 }
-   			)
-    	//原有正常操作
-    	$.post("/article_detail",
-    			 {
-						title:$("#title_list").val()
-		
-    			 },
-    			 function(data, status){
-    				 //window.alert(data)
-    				 top5_userdata=data
-    				 for(i=0;i<data.length;i++)
-    				{
-    					 $("#top5_revision").text("The top five regular users");
-    					 //window.alert(data[i].number)
-    					 //window.alert(data[i].user)
-    					 $("#top"+(2*i+1)).text("Username: "+data[i].user);
-    					 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
-    				}
-    			 }
-    			)
+    	
     })
     //当用户选择画某个文章的图片的时候
     $("#bt_article_draw").click(function(){

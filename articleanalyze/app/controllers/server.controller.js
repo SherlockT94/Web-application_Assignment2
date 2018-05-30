@@ -13,6 +13,7 @@ var article_draw_model=require('../models/article_draw_model')
 var initial_author_model=require('../models/initial_author_model')
 var author_detail_model=require('../models/author_detail_model')
 var author_title_model=require('../models/author_title_model')
+var update_model=require('../models/update_model')
 module.exports.showmainpage = function(req,res){
 	res.render('mainpage.pug');
 }
@@ -443,21 +444,23 @@ module.exports.author_title = function(req,res)
 	})
 	
 }
-module.exports.update = function(req,res)
+module.exports.update = function(req,response)
 {
+	var count=0
 	var wikiEndpoint = "https://en.wikipedia.org/w/api.php",
 
-	a="australia"
-	t="2016-11-01T11:56:22Z"
+	title=req.body.title
+	timestamp=req.body.timestamp
+	var promise1= new Promise(function(resolve,reject){
     parameters = ["action=query",
     "format=json",
-    "prop=revisions", "titles="+a, "rvstart="+t, "rvdir=newer",
+    "prop=revisions", "titles="+title, "rvstart="+timestamp, "rvdir=newer",
     "rvlimit=max",
     "rvprop=timestamp|userid|user|ids"]
 	
 	var url = wikiEndpoint + "?" + parameters.join("&");
 	
-	console.log("url: " + url)
+	//console.log("url: " + url)
 	var options = {
 	    url: url,
 	    Accept: 'application/json',
@@ -478,10 +481,31 @@ module.exports.update = function(req,res)
 			json=JSON.parse(data);
 			pages=json.query.pages
 			revisions=pages[Object.keys(pages)[0]].revisions
-			console.log("There are" + revisions.length + "revisions.");
+			//console.log("There are" + revisions.length + "revisions.");
 			console.log(revisions)
+			count=revisions.length
+			console.log("count is"+count)
+			for(i=0;i<revisions.length;i++)
+			{
+				var newupdate= new update_model({
+					 revid:revisions[i].revid,
+					 parentid:revisions[i].parentid, 
+					 user:revisions[i].user, 
+					 userid:revisions[i].userid,
+					 timestamp:revisions[i].timestamp,
+					 })
+				//console.log(newregister);
+				newupdate.save();
+			}
+			console.log("revisions length is"+revisions.length)
+			resolve(count)
 		}
 	})
-	res.send("update")
+	})
+	promise1.then(function(){
+		console.log("count is"+count)
+		response.send(count.toString())
+	})
+	
 	
 }
