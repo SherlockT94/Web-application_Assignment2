@@ -18,10 +18,13 @@
 			]);
 		}
 		var options = {
-		          width: 800,
+				  width: 580,
+				  height:450,
+				  legend:{
+					position: 'bottom'
+				},
 		          chart: {
-		            title: 'Nearby galaxies',
-		        subtitle: 'distance on the left, brightness on the right'
+		            title: 'Overall yearly revision number distribution',
 		      },
 		      bars: 'vertical', // Required for Material Bar Charts.
 			  }
@@ -49,9 +52,12 @@
      ]);
 
      // Set chart options
-     var options = {'title':'How Much Pizza I Ate Last Night',
-                    'width':400,
-                    'height':300};
+	 var options = {'title':'Revision number of distribution by usertype',
+	 				'width':550,
+					 'height':550,
+					legend:{
+						position: 'top'
+					},};
 
      // Instantiate and draw our chart, passing in some options.
      var chart = new google.visualization.PieChart(document.getElementById(id));
@@ -108,7 +114,7 @@
 //	          ['regular', 250]
 //	        ]);
 		var options = {
-		          width: 800,
+		          width: 550,
 		          chart: {
 		            title: 'Nearby galaxies',
 		        subtitle: 'distance on the left, brightness on the right'
@@ -143,28 +149,53 @@ $(document).ready(function() {
 		  function(data,status){
     	//window.alert(data);
     	//window.alert(data[0].NumOfRevisions);
-    	current_date = new Date();
-    	for(i=0;i<3;i++)
-    	{
-    		//填充most和least区域
-    		$('#most'+(i+1)).html("Title: "+data[i]._id+"<br/>Number of revisions: "+data[i].NumOfRevisions);
-    		$('#least'+(i+1)).html("Title: "+data[i+3]._id+"<br/>Number of revisions: "+data[i+3].NumOfRevisions);
-    		//时间差计算
-    		past_long_time=data[i+6].mintimestamp.substring(0,10);
-    		past_short_time=data[i+9].mintimestamp.substring(0,10);
+		current_date = new Date();
+		var hmost ='';
+		var hleast ='';
+		var hlong ='';
+		var hshort ='';
+		for(i=0;i<3;i++){
+			hmost= hmost+'<tr id="mr'+(i+1)+'">';
+			hmost= hmost+'<td>'+(i+1)+'</td>';
+			hmost= hmost+'<td>'+data[i]._id+'</td>';
+			hmost= hmost+'<td>'+data[i].NumOfRevisions+'</td>';
+			hmost= hmost+'</tr>';
+			hleast= hleast+'<tr id="lr'+(i+1)+'">';
+			hleast= hleast+'<td>'+(i+1)+'</td>';
+			hleast= hleast+'<td>'+data[i+3]._id+'</td>';
+			hleast= hleast+'<td>'+data[i+3].NumOfRevisions+'</td>';
+			hleast= hleast+'</tr>';
+			past_long_time=data[i+6].mintimestamp.substring(0,10);
+    		
     		//window.alert(past_long_time+past_short_time);
-    		past_long_time_date = new Date(past_long_time.replace(/-/g, "/"));
-    		past_short_time_date = new Date(past_short_time.replace(/-/g, "/"));
+    		past_long_time_date = new Date(past_long_time.replace(/-/g, "/"));  		
     		//window.alert("123");
-    		past_long_ms = current_date.getTime()-past_long_time_date.getTime();
-    		past_short_ms = current_date.getTime()-past_short_time_date.getTime();
+    		past_long_ms = current_date.getTime()-past_long_time_date.getTime();    		
     		past_long_day=parseInt(past_long_ms / (1000 * 60 * 60 * 24));
-    		past_short_day=parseInt(past_short_ms / (1000 * 60 * 60 * 24));
-    		//填充long和short区域
-    		$('#long'+(i+1)).html("Title: "+data[i+6]._id+"<br/>First Revision on: "+data[i+6].mintimestamp.substring(0,10)+"<br/>Has been released for:"+ past_long_day);
-    		$('#short'+(i+1)).html("Title: "+data[i+9]._id+"<br/>First Revision on: "+data[i+9].mintimestamp.substring(0,10)+"<br/>Has been released for:"+ past_short_day);
-    	};
-    	$('#popularity').html("The most popular one is: "+data[12].title+"<br/>Edited by "+data[12].NumOfUser+" users"+"<br/>The least popular one is: "+data[13].title+"<br/>Edited by "+data[13].NumOfUser+" users")
+    		
+			hlong= hlong+'<tr>';
+			hlong= hlong+'<td>'+(i+1)+'</td>';
+			hlong= hlong+'<td>'+data[i+6]._id+'</td>';
+			hlong= hlong+'<td>'+data[i+6].mintimestamp.substring(0,10)+'</td>';
+			hlong= hlong+'<td>'+past_long_day+'</td>';
+			hlong= hlong+'</tr>';
+			
+		}
+		past_short_time=data[9].mintimestamp.substring(0,10);
+		past_short_time_date = new Date(past_short_time.replace(/-/g, "/"));
+		past_short_ms = current_date.getTime()-past_short_time_date.getTime();
+		past_short_day=parseInt(past_short_ms / (1000 * 60 * 60 * 24));
+		hshort= hshort+'<tr>';
+		hshort= hshort+'<td>'+(1)+'</td>';
+		hshort= hshort+'<td>'+data[9]._id+'</td>';
+		hshort= hshort+'<td>'+data[9].mintimestamp.substring(0,10)+'</td>';
+		hshort= hshort+'<td>'+past_short_day+'</td>';
+		hshort= hshort+'</tr>';
+		$('#most_revision').html(hmost);
+		$('#least_revision').html(hleast);
+		$('#long_history').html(hlong);
+		$('#short_history').html(hshort);
+		$('#thepopularity').html("The most popular one is: "+data[12].title+" , Edited by "+data[12].NumOfUser+" users"+"<br/>The least popular one is: "+data[13].title+" , Edited by "+data[13].NumOfUser+" users")
     });
     //初始化表格
     $.getJSON("/initial_draw",
@@ -235,9 +266,19 @@ $(document).ready(function() {
     	    				{
     	    					author_html+=("Title: "+data[i]._id+"<br/>contributed revision number:"+data[i].numOfEdits+"<br/><br/>")
     	    					$('#revision_detail').append("<option value='"+data[i]._id+"'>"+data[i]._id+"</option>")
-    	    				}
+							}
+							huser='';
+						   for(i=0;i<data.length;i++){
+							huser= huser+'<tr>';
+							huser= huser+'<td>'+(i+1)+'</td>';
+							huser= huser+'<td>'+data[i]._id+'</td>';
+							huser= huser+'<td>'+data[i].numOfEdits+'</td>';
+							huser= huser+'</tr>';
+						   }
     	    				window.alert(author_html)
-    	    				$("#author_info").html(author_html)
+							$("#author_info").html(huser)
+							$("#content_title").html('The articles edited by: '+$("#author_name").val())
+							$('#revision_record').show()
     	    			})
     	    			//window.alert("Have user")
     	    			$.post("/author_detail",
@@ -315,16 +356,28 @@ $(document).ready(function() {
 	   		
 	       			 },
 	       			 function(data, status){
+						top5_userdata=data
 	       				 //window.alert(data)
-	       				 for(i=0;i<data.length;i++)
-	       				{
-	       					top5_userdata=data
+	       				//  for(i=0;i<data.length;i++)
+	       				// {
+	       				// 	top5_userdata=data
 	       					 $("#top5_revision").text("The top five regular users");
-	       					 //window.alert(data[i].number)
-	       					 //window.alert(data[i].user)
-	       					 $("#top"+(2*i+1)).text("Username: "+data[i].user);
-	       					 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
-	       				}
+	       				// 	 //window.alert(data[i].number)
+	       				// 	 //window.alert(data[i].user)
+	       				// 	 $("#top"+(2*i+1)).text("Username: "+data[i].user);
+	       				// 	 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
+						//    }
+						   huser_revision='';
+						   for(i=0;i<data.length;i++){
+							   huser_revision= huser_revision+'<tr>';
+							   huser_revision= huser_revision+'<td>'+(i+1)+'</td>';
+							   huser_revision= huser_revision+'<td>'+data[i].user+'</td>';
+							   huser_revision= huser_revision+'<td>'+data[i].number+'</td>';
+							   huser_revision= huser_revision+'</tr>';
+						   }
+						   $("#user_revison").html(huser_revision);
+						   $('#colunmtitle').html('Summery of the '+$("#title_list").val());
+						   $('#articlechart').show();
 	       			 }
 	       			)
         	}
@@ -332,7 +385,8 @@ $(document).ready(function() {
         	{
         		$.post("/update",
        	   			 {
-       							title:$("#title_list").val(),
+								//    title:$("#title_list").val(),
+								title:$("#article_title").text(),
        							timestamp: timestamp
        			
        	   			 },
@@ -340,20 +394,32 @@ $(document).ready(function() {
        	   				 window.alert(data+" Records has been updated!")
        		   				 $.post("/article_detail",
        	       			 {
-       	   						title:$("#title_list").val()
+									  title:$("#title_list").val()
+									//   title:$("#article_title").text()
        	   		
        	       			 },
        	       			 function(data, status){
        	       				 //window.alert(data)
        	       				 top5_userdata=data
-       	       				 for(i=0;i<data.length;i++)
-       	       				{
+       	       				//  for(i=0;i<data.length;i++)
+       	       				// {
        	       					 $("#top5_revision").text("The top five regular users");
-       	       					 //window.alert(data[i].number)
-       	       					 //window.alert(data[i].user)
-       	       					 $("#top"+(2*i+1)).text("Username: "+data[i].user);
-       	       					 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
-       	       				}
+       	       				// 	 //window.alert(data[i].number)
+       	       				// 	 //window.alert(data[i].user)
+       	       				// 	 $("#top"+(2*i+1)).text("Username: "+data[i].user);
+       	       				// 	 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
+							// 	  }
+							huser_revision='';
+						for(i=0;i<data.length;i++){
+							huser_revision= huser_revision+'<tr>';
+							huser_revision= huser_revision+'<td>'+(i+1)+'</td>';
+							huser_revision= huser_revision+'<td>'+data[i].user+'</td>';
+							huser_revision= huser_revision+'<td>'+data[i].number+'</td>';
+							huser_revision= huser_revision+'</tr>';
+						}
+						$("#user_revison").html(huser_revision);
+						$('#colunmtitle').html('Summery of the '+$("#title_list").val());
+						$('#articlechart').show();
        	       			 }
        	       			)
        	   			 }
@@ -402,14 +468,25 @@ $(document).ready(function() {
 	       			 function(data, status){
 	       				 //window.alert(data)
 	       				 top5_userdata=data
-	       				 for(i=0;i<data.length;i++)
-	       				{
+	       				//  for(i=0;i<data.length;i++)
+	       				// {
 	       					 $("#top5_revision").text("The top five regular users");
-	       					 //window.alert(data[i].number)
-	       					 //window.alert(data[i].user)
-	       					 $("#top"+(2*i+1)).text("Username: "+data[i].user);
-	       					 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
-	       				}
+	       				// 	 //window.alert(data[i].number)
+	       				// 	 //window.alert(data[i].user)
+	       				// 	 $("#top"+(2*i+1)).text("Username: "+data[i].user);
+	       				// 	 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
+						//    }
+						   huser_revision='';
+						for(i=0;i<data.length;i++){
+							huser_revision= huser_revision+'<tr>';
+							huser_revision= huser_revision+'<td>'+(i+1)+'</td>';
+							huser_revision= huser_revision+'<td>'+data[i].user+'</td>';
+							huser_revision= huser_revision+'<td>'+data[i].number+'</td>';
+							huser_revision= huser_revision+'</tr>';
+						}
+						$("#user_revison").html(huser_revision);
+						$('#colunmtitle').html('Summery of the '+$("#title_list").val());
+						$('#articlechart').show();
 	       			 }
 	       			)
 	   			 }
@@ -426,14 +503,25 @@ $(document).ready(function() {
        			 function(data, status){
        				 //window.alert(data)
        				 top5_userdata=data
-       				 for(i=0;i<data.length;i++)
-       				{
+       				//  for(i=0;i<data.length;i++)
+       				// {
        					 $("#top5_revision").text("The top five regular users");
-       					 //window.alert(data[i].number)
-       					 //window.alert(data[i].user)
-       					 $("#top"+(2*i+1)).text("Username: "+data[i].user);
-       					 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
-       				}
+       				// 	 //window.alert(data[i].number)
+       				// 	 //window.alert(data[i].user)
+       				// 	 $("#top"+(2*i+1)).text("Username: "+data[i].user);
+       				// 	 $("#top"+(2*i+2)).text("Number of revision: "+data[i].number);
+					//    }
+					   huser_revision='';
+						for(i=0;i<data.length;i++){
+							huser_revision= huser_revision+'<tr>';
+							huser_revision= huser_revision+'<td>'+(i+1)+'</td>';
+							huser_revision= huser_revision+'<td>'+data[i].user+'</td>';
+							huser_revision= huser_revision+'<td>'+data[i].number+'</td>';
+							huser_revision= huser_revision+'</tr>';
+						}
+						$("#user_revison").html(huser_revision);
+						$('#colunmtitle').html('Summery of the '+$("#title_list").val());
+						$('#articlechart').show();
        			 }
        			)
     	}
@@ -453,7 +541,7 @@ $(document).ready(function() {
 			
 	   			 },
 	   			 function(data, status){
-	   				 //window.alert(data)
+	   				 console.log(data);
 	   				//window.alert(data)
 	   				article_pic_data=data
 	   				if($('#changechart').val()=="year_type")
@@ -551,36 +639,37 @@ $(document).ready(function() {
     	//
     	if ($('#changeno_list').val()=='1')
     	{
-    		$('#most1').show();
-    		$('#most2').hide();
-    		$('#most3').hide();
-    		$('#least1').show();
-    		$('#least2').hide();
-    		$('#least3').hide();
-    		$('#most_title').text("top 1 most revision");
-    		$('#least_title').text("top 1 least revision");
+			$('#mr1').show();
+			$('#mr2').hide();
+			$('#mr3').hide();
+			$('#lr1').show()
+			$('#lr2').hide();
+			$('#lr3').hide();
+			$('#mostTitle').text("Top 1 most revision");
+			$('#leastTitle').text("Top 1 least revision");
     	}
     	else if ($('#changeno_list').val()=='2')
     	{
-    		$('#most1').show();
-    		$('#most2').show();
-    		$('#most3').hide();
-    		$('#least1').show();
-    		$('#least2').show();
-    		$('#least3').hide();
-    		$('#most_title').text("top 2 most revision");
-    		$('#least_title').text("top 2 least revision");
+			$('#mr1').show();
+			$('#mr2').show();
+			$('#mr3').hide();
+			$('#lr1').show()
+			$('#lr2').show();
+			$('#lr3').hide();
+			$('#mostTitle').text("Top 2 most revision");
+			$('#leastTitle').text("Top 2 least revision");
     	}
     	else
     	{
-    		$('#most1').show();
-    		$('#most2').show();
-    		$('#most3').show();
-    		$('#least1').show();
-    		$('#least2').show();
-    		$('#least3').show();
-    		$('#most_title').text("top 3 most revision");
-    		$('#least_title').text("top 3 least revision");
+    		
+			$('#mr1').show();
+			$('#mr2').show();
+			$('#mr3').show();
+			$('#lr1').show()
+			$('#lr2').show();
+			$('#lr3').show();
+			$('#mostTitle').text("Top 3 most revision");
+			$('#leastTitle').text("Top 3 least revision");
     	}
     })
     //当用户选择不同历史的时候
@@ -599,10 +688,12 @@ $(document).ready(function() {
     })
     $('#bt_barchart').click(function()
     {
+		$('#chart_title').html('Overall yearly revision number distribution');
     	drawBar(pic_data,'thechart');
     });
     $('#bt_piechart').click(function()
     	    {
+				$('#chart_title').html('Revision number of distribution by usertype');
     	    	drawPie(pic_data,'thechart');
     });
     
