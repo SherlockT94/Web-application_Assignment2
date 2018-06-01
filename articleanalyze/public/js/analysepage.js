@@ -132,6 +132,7 @@
  var top5_year_data//用来记录这top5的人每个人在每年的当前这本书的revison数量是多少，是个每个json object为[年份，top1:0，top2:0，top3:0...]的json数组。
  var user_data={}//在初始化的时候就把user的姓名给载入好，这样后面就不用去数据库查询了。
  var author_revision_list//接受每一个author的所有的revision信息的列表，这样在后面显示的时候就不用一次次向mongoDB去请求了。{id, timestamp,title}
+ var update_list=[]
 $(document).ready(function() {
 	//选择要展示的部分
 	if(window.location=="http://localhost:3000/articles/add")
@@ -212,6 +213,7 @@ $(document).ready(function() {
 	    	//window.alert(data);
     		individual_data=data;
     		var list={}
+    		$('#title_list').append("<option value='default'></option>")
     		for(i=0;i<data.length;i++)
     		{
     			$('#title_list').append("<option value='"+data[i]._id+"'>"+data[i]._id+"["+data[i].NumOfRevisions+"]</option>")
@@ -262,6 +264,8 @@ $(document).ready(function() {
     	    			function(data,status){
     	    				//window.alert(data)
     	    				author_html=""
+    	    				$('#revision_detail').empty();
+    	    				$('#revision_detail').append("<option value='default'></option>")
     	    				for(i=0;i<data.length;i++)
     	    				{
     	    					author_html+=("Title: "+data[i]._id+"<br/>contributed revision number:"+data[i].numOfEdits+"<br/><br/>")
@@ -275,7 +279,7 @@ $(document).ready(function() {
 							huser= huser+'<td>'+data[i].numOfEdits+'</td>';
 							huser= huser+'</tr>';
 						   }
-    	    				window.alert(author_html)
+    	    				//window.alert(author_html)
 							$("#author_info").html(huser)
 							$("#content_title").html('The articles edited by: '+$("#author_name").val())
 							$('#revision_record').show()
@@ -339,6 +343,14 @@ $(document).ready(function() {
     			break
     		}
     	}
+    	for(i=0;i<update_list.length;i++)
+    	{
+    		if(update_list[i]==$("#title_list").val())
+    		{
+    			tip=1
+				window.alert("No data is needed for update")
+    		}
+    	}
     	if(flag==0)
     	{
     		window.alert("No result is found!Please enter again")
@@ -383,6 +395,7 @@ $(document).ready(function() {
         	}
         	else
         	{
+        		update_list.push($('#autocomplete-input').val())
         		$.post("/update",
        	   			 {
 								//    title:$("#title_list").val(),
@@ -447,11 +460,21 @@ $(document).ready(function() {
     			}
     		}
     	}
+    	for(i=0;i<update_list.length;i++)
+    	{
+    		if(update_list[i]==$("#title_list").val())
+    		{
+    			tip=1
+				window.alert("No data is needed for update")
+    		}
+    	}
     	$("#top5_revision").text("Searching for the top 5 users...");
     	$(".top").text("");
     	//如果需要更新的话
     	if(tip==0)
     	{
+    		update_list.push($("#title_list").val());
+    		//window.alert(update_list)
 	    	$.post("/update",
 	   			 {
 							title:$("#title_list").val(),
