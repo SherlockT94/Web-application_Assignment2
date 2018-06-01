@@ -216,7 +216,7 @@ $(document).ready(function() {
     		$('#title_list').append("<option value='default'></option>")
     		for(i=0;i<data.length;i++)
     		{
-    			$('#title_list').append("<option value='"+data[i]._id+"'>"+data[i]._id+"["+data[i].NumOfRevisions+"]</option>")
+    			$('#title_list').append("<option id='option"+i+"' value='"+data[i]._id+"'>"+data[i]._id+"["+data[i].NumOfRevisions+"]</option>")
     			list[data[i]._id]=null
     			
     		}
@@ -322,6 +322,8 @@ $(document).ready(function() {
     $("#bt_searchArticle").click(function(){
     	flag=0
     	tip=0
+    	var new_total
+    	var for_option//记录第几个选项要改的
     	for(i=0;i<individual_data.length;i++)
     	{
     		//window.alert($('#autocomplete-input').val());
@@ -330,7 +332,9 @@ $(document).ready(function() {
     			//window.alert($('#autocomplete-input').val());
     			flag+=1;
     			$("#article_title").text($('#autocomplete-input').val());
-    			$("#total_revision").text("Total revisions:"+individual_data[i].NumOfRevisions);
+    			new_total=individual_data[i].NumOfRevisions
+    			for_option=i
+    			//$("#total_revision").text("Total revisions:"+individual_data[i].NumOfRevisions);
     			s1 = new Date();
     			timestamp=individual_data[i].timestamp
     			s2=Date.parse(timestamp)
@@ -405,6 +409,9 @@ $(document).ready(function() {
        	   			 },
        	   			 function(data, status){
        	   				 window.alert(data+" Records has been updated!")
+   	   				  	new_total+=parseInt(data)
+		   				$("#total_revision").text("Total revisions:"+new_total);
+		   				$("#option"+ for_option).text($("#title_list").val()+"["+new_total+"]")
        		   				 $.post("/article_detail",
        	       			 {
 									  title:$("#title_list").val()
@@ -443,12 +450,15 @@ $(document).ready(function() {
     //当用户选择不同的文章的时候
     $("#title_list").change(function(){
     	tip=0
+    	var new_total
+    	var for_option//记录第几个选项要改的
     	$("#article_title").text($("#title_list").val());
     	for(i=0;i<individual_data.length;i++)
     	{
     		if(individual_data[i]._id==$("#title_list").val())
     		{
-    			$("#total_revision").text("Total revisions:"+individual_data[i].NumOfRevisions);
+    			for_option=i
+    			new_total=individual_data[i].NumOfRevisions
     			s1 = new Date();
     			timestamp=individual_data[i].timestamp
     			s2=Date.parse(timestamp)
@@ -483,6 +493,11 @@ $(document).ready(function() {
 	   			 },
 	   			 function(data, status){
 	   				 window.alert(data+" Records has been updated!")
+	   				//更新新的数量
+	   				 new_total+=parseInt(data)
+	   				$("#total_revision").text("Total revisions:"+new_total);
+	   				$("#option"+ for_option).text($("#title_list").val()+"["+new_total+"]")
+	   			//调用该用户现在的数据
 		   				 $.post("/article_detail",
 	       			 {
 	   						title:$("#title_list").val()
