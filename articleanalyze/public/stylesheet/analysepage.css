@@ -62,3 +62,11 @@ caption{
     height: 30px;
     margin-left: 10px;
 }
+#revision_time{
+    overflow: auto;
+    height: 600px;
+}
+#individual_chart{
+    overflow: auto;
+    height: 500px;
+}

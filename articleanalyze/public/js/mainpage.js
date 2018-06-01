@@ -50,6 +50,7 @@ $(document).ready(function() {
     })
      $("#submit").click(function(){
 		//window.alert("123");
+		   var reg = /\w+[@]{1}\w+[.]\w+/;
     	 if($("#first_name").val()==""||$("#last_name").val()==""||$("#last_name").val()==""||$("#email_address").val()==""||$("#re_username").val()==""||$("#re_password").val()==""||$("#confirm_password").val()=="")
     		{
     		  window.alert("Please fill all the required fields");
@@ -57,7 +58,12 @@ $(document).ready(function() {
     	 else if($("#re_password").val()!=$("#confirm_password").val())
     	{
     		 window.alert("The passwords are not the same");
-    	}
+			}
+			else if(!reg.test($("#email_address").val()))
+			{
+				window.alert("The email is invalid!")
+
+			}
     	 else
     	{
     		 $.post("/register",

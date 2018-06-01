@@ -9,6 +9,7 @@ mongoose.connect('mongodb://localhost/wikipedia', function () {
 
 var update_schema = new mongoose.Schema(
 		{
+	     title:String,
 		 revid:String,
 		 parentid:String, 
 		 user:String, 
@@ -26,6 +27,6 @@ var update_schema = new mongoose.Schema(
 //	.exec(callback)
 //	}
 
-var Update = mongoose.model('Update', update_schema, 'userinfo');
+var Update = mongoose.model('Update', update_schema, 'revisions');
 
 module.exports = Update

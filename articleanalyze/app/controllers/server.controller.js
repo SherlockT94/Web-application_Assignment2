@@ -488,6 +488,7 @@ module.exports.update = function(req,response)
 			for(i=0;i<revisions.length;i++)
 			{
 				var newupdate= new update_model({
+					 title:title,
 					 revid:revisions[i].revid,
 					 parentid:revisions[i].parentid, 
 					 user:revisions[i].user, 

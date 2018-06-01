@@ -282,6 +282,7 @@ $(document).ready(function() {
     	    				//window.alert(author_html)
 							$("#author_info").html(huser)
 							$("#content_title").html('The articles edited by: '+$("#author_name").val())
+							$("#revision_time").html('')
 							$('#revision_record').show()
     	    			})
     	    			//window.alert("Have user")
@@ -320,6 +321,7 @@ $(document).ready(function() {
     		})
     //搜索文章功能
     $("#bt_searchArticle").click(function(){
+		if($('#autocomplete-input').val()!=''){
     	flag=0
     	tip=0
     	var new_total
@@ -366,6 +368,7 @@ $(document).ready(function() {
         	$(".top").text("");
         	if(tip==1)
         	{
+				$("#total_revision").text("Total revisions:"+individual_data[for_option].NumOfRevisions);
 	    		$.post("/article_detail",
 	       			 {
 	   						title:$("#article_title").text()
@@ -392,7 +395,7 @@ $(document).ready(function() {
 							   huser_revision= huser_revision+'</tr>';
 						   }
 						   $("#user_revison").html(huser_revision);
-						   $('#colunmtitle').html('Summery of the '+$("#title_list").val());
+						   $('#colunmtitle').html('Summary of the '+$("#autocomplete-input").val());
 						   $('#articlechart').show();
 	       			 }
 	       			)
@@ -410,7 +413,8 @@ $(document).ready(function() {
        	   			 function(data, status){
        	   				 window.alert(data+" Records has been updated!")
    	   				  	new_total+=parseInt(data)
-		   				$("#total_revision").text("Total revisions:"+new_total);
+						   $("#total_revision").text("Total revisions:"+new_total);
+						   individual_data[for_option].NumOfRevisions=new_total
 		   				$("#option"+ for_option).text($("#title_list").val()+"["+new_total+"]")
        		   				 $.post("/article_detail",
        	       			 {
@@ -438,17 +442,22 @@ $(document).ready(function() {
 							huser_revision= huser_revision+'</tr>';
 						}
 						$("#user_revison").html(huser_revision);
-						$('#colunmtitle').html('Summery of the '+$("#title_list").val());
+						$('#colunmtitle').html('Summary of the '+$("#autocomplete-input").val());
 						$('#articlechart').show();
        	       			 }
        	       			)
        	   			 }
        	   			)
         	}
-    	}
+		}
+	}
+	else{
+		alert('Please select an artile')
+	}
     })
     //当用户选择不同的文章的时候
     $("#title_list").change(function(){
+		if($("#title_list").val()!='default'){
     	tip=0
     	var new_total
     	var for_option//记录第几个选项要改的
@@ -495,7 +504,8 @@ $(document).ready(function() {
 	   				 window.alert(data+" Records has been updated!")
 	   				//更新新的数量
 	   				 new_total+=parseInt(data)
-	   				$("#total_revision").text("Total revisions:"+new_total);
+					   $("#total_revision").text("Total revisions:"+new_total);
+					   individual_data[for_option].NumOfRevisions=new_total
 	   				$("#option"+ for_option).text($("#title_list").val()+"["+new_total+"]")
 	   			//调用该用户现在的数据
 		   				 $.post("/article_detail",
@@ -523,7 +533,7 @@ $(document).ready(function() {
 							huser_revision= huser_revision+'</tr>';
 						}
 						$("#user_revison").html(huser_revision);
-						$('#colunmtitle').html('Summery of the '+$("#title_list").val());
+						$('#colunmtitle').html('Summary of the '+$("#title_list").val());
 						$('#articlechart').show();
 	       			 }
 	       			)
@@ -533,6 +543,7 @@ $(document).ready(function() {
     	//原有正常操作
     	else
     	{
+			$("#total_revision").text("Total revisions:"+individual_data[for_option].NumOfRevisions);
     		$.post("/article_detail",
        			 {
    						title:$("#title_list").val()
@@ -558,12 +569,15 @@ $(document).ready(function() {
 							huser_revision= huser_revision+'</tr>';
 						}
 						$("#user_revison").html(huser_revision);
-						$('#colunmtitle').html('Summery of the '+$("#title_list").val());
+						$('#colunmtitle').html('Summary of the '+$("#title_list").val());
 						$('#articlechart').show();
        			 }
        			)
     	}
-    	
+	}
+	else{
+		alert('Please enter the article name!')
+	}
     	
     })
     //当用户选择画某个文章的图片的时候
