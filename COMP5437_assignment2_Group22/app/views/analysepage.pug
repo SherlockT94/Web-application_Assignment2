@@ -1,0 +1,28 @@
+extends layout
+
+block content
+    div    
+        nav
+            div(class="nav-content")
+                div#username(class="brand-logo right") Welcome, petunia
+                ul(class="tabs tabs-transparent")
+                    li(class="tab")
+                        a(href="#overview") Overview
+                    li(class="tab")
+                        a(href="#individual") Individual
+                    li(class="tab")
+                        a(href="#author") Author
+   
+    div#overview 
+        include ./overview.pug
+    div#individual 
+        include ./individual.pug
+    #author
+        include ./author.pug
+
+    link(rel='stylesheet'
+        type='text/css'
+        href='/stylesheet/analysepage.css')
+    
+
+ 

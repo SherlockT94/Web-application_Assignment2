@@ -1,0 +1,68 @@
+
+div#content(class="content")
+    .row
+        div#textcontent(class="input-field col s6") 
+            .colunmtitle Article summary
+            #revisions_number 
+                div.part_title Revisions 
+                div change the number here:&nbsp
+                    select#changeno_list
+                        option(value='1') 1
+                        option(value='2') 2
+                        option(value='3' selected=true) 3 (defalt)
+                .row
+                    #most(class="input-field col s6")
+                        table(class="striped")
+                            caption#mostTitle Top 3 most revisions
+                            thead                               
+                                tr
+                                    td No.
+                                    td Title
+                                    td Revisions
+                            tbody#most_revision
+                    #least(class="input-field col s6")
+                        table(class="striped")
+                            caption#leastTitle Top 3 least revisions
+                            thead
+                                tr
+                                    td No.
+                                    td Title
+                                    td Revisions
+                            tbody#least_revision
+            #history
+                div.part_title History
+                table(class="striped")
+                    caption Top 3 article with the longest history:
+                    thead
+                        tr
+                            td No.
+                            td Title
+                            td Creation time
+                            td Age
+                    tbody#long_history
+                br
+                table(class="striped")
+                        caption The article with the shortest history:
+                        thead
+                            tr
+                                td No.
+                                td Title
+                                td Creation time
+                                td Age
+                        tbody#short_history
+                br
+            #popularity
+                div.part_title Popularity
+                #thepopularity
+            
+
+        div#charts(class="input-field col s6")
+            .colunmtitle Charts
+            div.bt_changechart You can change the chart type:
+                button#bt_barchart(type="button", value="Bar chart") bar chart
+                button#bt_piechart(type="button", value="Pie chart") pie chart
+            center
+                p#chart_title
+            div#thechart
+            
+            

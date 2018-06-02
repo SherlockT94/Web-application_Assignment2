@@ -1,0 +1,48 @@
+#tb_login{
+    /* width: 40%;
+    font-size: 50px; */
+    font-style: italic;
+    border: lightblue;
+}
+#footer{
+    font-size: 30px;
+    color:red;
+    text-align: center;
+}
+.part_header{
+    text-align:center;
+    font-size: 40px;
+    margin-bottom: 30px;
+    padding-top:10px;
+    padding-bottom: 10px;
+    background-color:#00897b;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    font-weight: bold;
+}
+#tb_register{
+    margin:auto;
+    width:40%;
+}
+#register_form {
+    display: none;
+}
+#return_mainpage{
+    margin-left: 10px;
+}
+#bt_login{
+    width:150px;
+    margin:auto;
+}
+/* #imgbox{
+    display: none;
+} */
+
+body{
+    background-image: url(../images/background.png);
+}
+
+#icon{
+    float:left;
+    width:10%;
+}

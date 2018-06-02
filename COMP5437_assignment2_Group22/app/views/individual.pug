@@ -1,0 +1,67 @@
+.filterbar_individual
+    .row
+        div#select_article(class="input-field col s5")
+            .row
+                div(class="input-field col s5") You can select an article:
+                div(class="input-field col s7")
+                    select#title_list
+        div(class="input-field col s7")
+            .row
+                div(class="input-field col s4") You can enter the article title:
+                div(class="input-field col s5") 
+                    input(type="text" id="autocomplete-input" class="autocomplete" width='200px;')
+                div(class="input-field col s3")
+                    input#bt_searchArticle(type="button", value="select")
+.content 
+    .row
+        div#textcontent(class="input-field col s6")
+            div#colunmtitle(class='colunmtitle') Please select an article
+            .row
+                div#article_title(class="input-field col s6")
+                div#total_revision(class="input-field col s6")
+            //- div#top5_revision The top five regular users
+            //- p#article_title The title
+            //- p#total_revision The total number of revision
+            //- p#top5_revision The top five regular users
+            table(class="striped")
+                caption#top5_revision
+                thead
+                    tr
+                        td NO.
+                        td Username
+                        td Number of revision
+                tbody#user_revison(class='top')
+            //- p(class="top",id="top1") 
+            //- p(class="top",id="top2") 
+            //- p(class="top",id="top3") 
+            //- p(class="top",id="top4") 
+            //- p(class="top",id="top5")
+            //- p(class="top",id="top6")
+            //- p(class="top",id="top7") 
+            //- p(class="top",id="top8") 
+            //- p(class="top",id="top9") 
+            //- p(class="top",id="top10") 
+            
+
+        div#charts(class="input-field col s6")
+            .row
+                div#articlechart(class="input-field col s12") 
+                    .colunmtitle Charts
+                    .row
+                        div(class="input-field col s9")
+                            select#changechart
+                                option(value='year_type') Revision number distributed by user type and year
+                                option(value='type') Revision number distribution based on user type
+                                option(value='top5') Revision number distributed by year made by the top user
+                        div(class="input-field col s3")
+                            input#bt_article_draw(type="button", value="get the chart")
+                    div#individual_chart
+                    .row
+                        div(class="input-field col s8")
+                            select(id="user_list" style="display:none")
+                        div(class="input-field col s4")
+                            input(id="search_user" type="button" value="show personal data" style="display:none")
+             
+            
+            	
+            	

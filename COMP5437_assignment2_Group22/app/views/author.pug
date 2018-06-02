@@ -1,0 +1,26 @@
+.fliterbar_author
+    .row
+        div(class="input-field col s12") You can search an author by type his/her name here:
+            input#author_name(type="text")
+            input#bt_searchauthor(type="button", value="search")
+
+.content 
+    div#content_title(class='colunmtitle') Please search an author by name
+    .row
+        div(class="input-field col s6")
+            table(class="striped")
+                caption Total revision number for each article
+                thead
+                    tr
+                        td No.
+                        td Title
+                        td Contributed revision number
+                tbody#author_info
+        div(class="input-field col s6")
+            .row
+                div#revision_record(class="input-field col s12")          
+                    .colunmtitle Select an article to see the revision record
+                    select#revision_detail
+                    div#revision_time
+    
+
